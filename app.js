@@ -1,11 +1,12 @@
+require('dotenv').config();
 const express = require("express");
 const bodyParser = require("body-parser");
-const request = require("request");
 const https = require("https");
 const app = express();
 
+//allows the server to serve up static files saved in a folder not with a URL
 app.use(express.static(__dirname + "/public"));
-
+//bodyParser allows us to grab the data from the sign up form
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get("/", function (req, res) {
@@ -13,11 +14,13 @@ app.get("/", function (req, res) {
 });
 
 app.post("/", function (req, res) {
+  //requires the first name, last name and email from the body of the html document
   const firstName = req.body.fName;
   const lastName = req.body.lName;
   const email = req.body.email;
 
   let data = {
+    //member key value pairs for everyone who signs up to the newsletter
     members: [
       {
         email_address: email,
@@ -30,12 +33,16 @@ app.post("/", function (req, res) {
     ],
   };
   let jsonData = JSON.stringify(data);
+const DC = process.env.dc;
+const ID = process.env.id;
 
-  const url = "https://us21.api.mailchimp.com/3.0/lists/927a37fe5e";
+const url = "https://" + DC+ ".api.mailchimp.com/3.0/lists/" + ID + "";
+
+  const API_KEY = process.env.apikey;
 
   const options = {
     method: "POST",
-    auth: "alana:47f147d229f746bc142eb8da4d7ed45d-us21",
+    auth: "alana:" + API_KEY + ""
   };
 
   const request = https.request(url, options, function (response) {
@@ -55,18 +62,12 @@ app.post("/", function (req, res) {
 });
 
 
-
+//redirects to the home page if the sign in fails
 app.post("/failure", function(req, res) {
   res.redirect("/");
 });
 
-
-app.listen(process.env.PORT || 3000, function () {
+//specify to listen on localhost:3000
+app.listen(3000, function () {
   console.log("Server is running on 3000");
 });
-
-//APIkey
-// "47f147d229f746bc142eb8da4d7ed45d-us21"
-
-//list id
-//927a37fe5e
