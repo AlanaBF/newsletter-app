@@ -62,9 +62,11 @@ margin-bottom: -1px;
 }
 
 button {
+  display: flex;
   color:#caf0f8 !important;
 background-color: #181d31 !important;
 border: #181d31 solid 10px !important;
+border-radius: 20px !important;
 }
 
 button:hover {
