@@ -83,3 +83,17 @@ button:hover {
   padding: 1rem;
   margin: 0;
 }
+
+.p-5 {
+background-color: #055592 !important;
+text-align: center;
+}
+
+.success {
+  margin: auto !important;
+}
+
+.btn-return {
+  text-align: center;
+  align-items: center;
+}
